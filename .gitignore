@@ -4,3 +4,4 @@ src/**/*.js
 dist/*
 log/*
 .temp/*
+out/*
