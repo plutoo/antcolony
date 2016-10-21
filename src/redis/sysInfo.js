@@ -1,33 +1,33 @@
-'use strict';
-
-var redis = require('./../common/redis');
-
+"use strict";
+const redis = require('./../common/redis');
 // 增加发送请求数
-exports.incrSendRequest = function () {
+function incrSendRequest() {
     redis.hincrby('sysInfo', 'sendRequest', 1);
-};
-
+}
+exports.incrSendRequest = incrSendRequest;
 // 增加发送响应数
-exports.incrSendReponse = function () {
+function incrSendReponse() {
     redis.hincrby('sysInfo', 'sendReponse', 1);
-};
-
+}
+exports.incrSendReponse = incrSendReponse;
 // 增加接收请求数
-exports.incrReceiveRequest = function () {
+function incrReceiveRequest() {
     redis.hincrby('sysInfo', 'receiveRequest', 1);
-};
-
+}
+exports.incrReceiveRequest = incrReceiveRequest;
 // 增加接收响应数
-exports.incrReceiveReponse = function () {
+function incrReceiveReponse() {
     redis.hincrby('sysInfo', 'receiveReponse', 1);
-};
-
+}
+exports.incrReceiveReponse = incrReceiveReponse;
 // 增加接收错误数
-exports.incrReceiveError = function () {
+function incrReceiveError() {
     redis.hincrby('sysInfo', 'receiveError', 1);
-};
-
+}
+exports.incrReceiveError = incrReceiveError;
 // infohash+1
-exports.incrInfohash = function () {
+function incrInfohash() {
     redis.hincrby('sysInfo', 'infohash', 1);
-};
+}
+exports.incrInfohash = incrInfohash;
+//# sourceMappingURL=sysInfo.js.map

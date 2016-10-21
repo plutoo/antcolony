@@ -1,7 +1,8 @@
-"use strict";
-const http = require('http');
-const url = require('url');
-const zlib = require('zlib');
+import http = require('http');
+import url = require('url');
+import util = require('util');
+import zlib = require('zlib');
+
 var headers = {
     'accept-charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
     'accept-language': 'en-US,en;q=0.8',
@@ -9,11 +10,14 @@ var headers = {
     'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/537.13+ (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2',
     'accept-encoding': 'gzip,deflate'
 };
-module.exports = function (torrentUrl, callback) {
+
+export = function (torrentUrl: string, callback: (code: number | Error, ret?: string) => void) {
     var torrentUrlObj = url.parse(torrentUrl);
+
     // 不写referer，有些地址会失败
     // 写了，会出现404错认为200
     //headers['referer'] = util.format('http://%s',torrentUrlObj.hostname);
+
     var options = {
         hostname: torrentUrlObj.hostname,
         path: torrentUrlObj.path,
@@ -22,29 +26,31 @@ module.exports = function (torrentUrl, callback) {
         secureProtocol: 'SSLv3_method',
         headers: headers
     };
+
     http.request(options, function (res) {
+
         var chunks = [];
         res.on('data', function (chunk) {
             chunks.push(chunk);
         });
+
         res.on('end', function () {
             if (res.statusCode !== 200 || res.headers['content-type'].indexOf('text/html') !== -1) {
                 callback(res.statusCode || 404);
                 return;
             }
+
             var buffer = Buffer.concat(chunks);
             var encoding = res.headers['content-encoding'];
             if (encoding === 'gzip') {
                 zlib.gunzip(buffer, function (err, decoded) {
                     callback(err, decoded);
                 });
-            }
-            else if (encoding === 'deflate') {
+            } else if (encoding === 'deflate') {
                 zlib.inflate(buffer, function (err, decoded) {
                     callback(err, decoded);
                 });
-            }
-            else {
+            } else {
                 callback(null, buffer.toString());
             }
         });
@@ -52,4 +58,3 @@ module.exports = function (torrentUrl, callback) {
         callback(err);
     }).end();
 };
-//# sourceMappingURL=download.js.map

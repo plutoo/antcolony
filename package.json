@@ -1,31 +1,38 @@
 {
-    "name": "AntColony",
-    "version": "1.0.0",
-    "description": "DHT Search Engine",
-    "author": {
-        "name": "keenwon",
-        "email": "semanwmj@yeah.net"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/keenwon/antcolony.git"
-    },
-    "devDependencies": {
-        "grunt": "*",
-        "grunt-contrib-jasmine": "^0.7.0",
-        "grunt-ssh": "^0.11.2",
-        "grunt-contrib-jshint": "^0.10.0",
-        "grunt-contrib-copy": "^0.5.0",
-        "grunt-contrib-uglify": "^0.6.0"
-    },
-    "dependencies": {
-        "redis": "^0.12.1",
-        "moment": "*",
-        "winston": "^0.7.3",
-        "async": "^0.9.0",
-        "mongoose": "^3.8.15",
-        "lodash": "^2.4.1",
-        "bencode": "^0.6.0",
-        "elasticsearch": "^2.4.3"
-    }
+  "name": "AntColony",
+  "version": "1.0.0",
+  "description": "DHT Search Engine",
+  "author": {
+    "name": "keenwon",
+    "email": "semanwmj@yeah.net"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/keenwon/antcolony.git"
+  },
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-contrib-jasmine": "^0.7.0",
+    "grunt-ssh": "^0.11.2",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-copy": "^0.5.0",
+    "grunt-contrib-uglify": "^0.6.0"
+  },
+  "dependencies": {
+    "@types/async": "^2.0.32",
+    "@types/lodash": "^4.14.37",
+    "@types/moment": "^2.13.0",
+    "@types/mongoose": "^4.5.38",
+    "@types/node": "^6.0.45",
+    "@types/redis": "^0.12.32",
+    "@types/winston": "^0.0.28",
+    "async": "^0.9.0",
+    "bencode": "^0.6.0",
+    "elasticsearch": "^2.4.3",
+    "lodash": "^2.4.1",
+    "moment": "*",
+    "mongoose": "^3.8.15",
+    "redis": "^0.12.1",
+    "winston": "^0.7.3"
+  }
 }

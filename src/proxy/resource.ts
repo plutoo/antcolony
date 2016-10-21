@@ -1,64 +1,62 @@
-"use strict";
-const moment = require('moment');
-const index = require('../models/index');
-const config = require('../../config');
+
+import moment = require('moment')
+import index = require('../models/index')
+import config = require('../../config')
 var Resource = index.Resource;
+
 // 新增一个资源
-function addResource(infohash, name, files, type, size, callback) {
-    var resource = new Resource();
+export function addResource(infohash: Buffer | string, name: string, files: string, type: string, size: number, callback: (err?: { code?: number } | string | Error, ret?: any) => void) {
+    var resource: any = new Resource();
     resource._id = infohash;
     resource.n = name;
     resource.f = files;
     resource.t = type;
     resource.s = size;
     resource.save(callback);
-}
-exports.addResource = addResource;
-;
+};
+
 // 根据infohash获取资源
-function getResourceByInfohash(infohash, callback) {
+export function getResourceByInfohash(infohash, callback) {
     Resource.findOne({ _id: infohash }, callback);
-}
-exports.getResourceByInfohash = getResourceByInfohash;
-;
+};
+
 // 热度+1
-function incrResource(infohash) {
-    Resource.findOne({ _id: infohash }, function (err, resource) {
+export function incrResource(infohash: Buffer) {
+    Resource.findOne({ _id: infohash }, function (err, resource: any) {
         if (err || !resource) {
             return;
         }
+
         // 只保留2周
         for (var i = resource.hs.length - 1; i >= 0; i--) {
             if (moment.utc(resource.hs[i].t).isBefore(moment.utc().subtract(config.hotCounts || 14, 'day'))) {
                 // 删除
                 resource.hs.splice(i, 1);
-            }
-            else {
+            } else {
                 break;
             }
         }
+
         // 更新最近2周的热度
         var now = moment.utc().format('YYYY-MM-DD');
         if (!resource.hs || resource.hs.length <= 0) {
             resource.hs = [
                 { t: now, v: 1 }
             ];
-        }
-        else if (moment.utc(now).isSame(resource.hs[0].t, 'day')) {
+        } else if (moment.utc(now).isSame(resource.hs[0].t, 'day')) {
             ++resource.hs[0].v;
-        }
-        else {
+        } else {
             resource.hs.unshift({ t: now, v: 1 });
         }
+
         //刷新最新热度
         resource.h = resource.hs[0].v;
+
         // 刷新更新时间
         resource.u = moment.utc();
+
         // 保存
         resource.markModified('hs');
         resource.save();
     });
-}
-exports.incrResource = incrResource;
-;
-//# sourceMappingURL=resource.js.map
+};

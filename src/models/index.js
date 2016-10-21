@@ -1,11 +1,10 @@
-var util = require('util'),
-    mongoose = require('mongoose'),
-    config = require('../../config'),
-    logger = require('../common/logger'),
-    uri = util.format('mongodb://%s:%d/%s', config.mongodbHost, config.mongodbPort, config.mongodbDatabase);
-
+"use strict";
+const util = require('util');
+const mongoose = require('mongoose');
+const config = require('../../config');
+const logger = require('../common/logger');
+var uri = util.format('mongodb://%s:%d/%s', config.mongodbHost, config.mongodbPort, config.mongodbDatabase);
 //mongoose.set('debug', config.debug);
-
 mongoose.connect(uri, {
     user: config.mongodbUserName,
     pass: config.mongodbPassword
@@ -15,12 +14,11 @@ mongoose.connect(uri, {
         process.exit(1);
     }
 });
-
 mongoose.connection.on('error', function (err) {
     logger.error('mongodb error: ' + err);
 });
-
 // models
 require('./resource');
-
+;
 exports.Resource = mongoose.model('Resource');
+//# sourceMappingURL=index.js.map
